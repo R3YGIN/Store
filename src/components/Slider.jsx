@@ -46,11 +46,15 @@ background-color: #${props=>props.bg};
 `
 const ImgContainer = styled.div`
 	height: 100%;
+	/* width: 100%; */
 	flex: 1;
+	overflow: hidden; // my fix
 `
 
 const Image = styled.img`
-	height: 80%;
+	height: 100%;
+	/* width: 100%; */
+	/* object-fit: cover; */
 `
 
 const InfoContainer = styled.div`
@@ -94,7 +98,7 @@ const Slider = () => {
 		</Arrow>
 		<Wrapper slideIndex={slideIndex}>
 			{sliderItems.map(item=>(
-				<Slide bg={item.bg}>
+				<Slide bg={item.bg} key={item.id}>
 					<ImgContainer>
 						<Image src={item.img}/>
 					</ImgContainer>
