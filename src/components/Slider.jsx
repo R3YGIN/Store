@@ -55,8 +55,8 @@ const ImgContainer = styled.div`
 
 const Image = styled.img`
 	height: 100%;
-	/* width: 100%; */
-	/* object-fit: cover; */
+	width: 100%;
+	object-fit: cover;
 `
 
 const InfoContainer = styled.div`
@@ -78,8 +78,15 @@ const Desc = styled.p`
 const Button = styled.button`
 	padding: 10px;
 	font-size: 20px;
-	background-color: transparent;
+	background-color: #000;
 	cursor: pointer;
+	border: none;
+	border-radius: 2px;
+	color: #fff;
+	&:hover{
+		color: #000;
+		background-color: #eee;
+	}
 `
 
 const Slider = () => {

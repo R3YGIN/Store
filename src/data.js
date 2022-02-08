@@ -1,24 +1,24 @@
 export const sliderItems = [
 	{
 		id: 1,
-		img: "http://unsplash.it/960/1032",
+		img: "http://unsplash.it/1500/1032",
 		title: "Летняя распродажа",
 		desc: "Не упустите возможность! Скидка 30% на всю коллекцию одежды 'Gorgeous Creed'",
-		bg: "f5fafd",
+		bg: "e6daa6",
 	},
 	{
 		id: 2,
-		img: "http://unsplash.it/960/1033",
+		img: "http://unsplash.it/1500/1033",
 		title: "Осенняя распродажа",
 		desc: "Не упустите возможность! Скидка 30% на всю коллекцию одежды 'Gorgeous Creed'",
-		bg: "f3fbfd",
+		bg: "e6daa6",
 	},
 	{
 		id: 3,
-		img: "http://unsplash.it/960/1034",
+		img: "http://unsplash.it/1500/1034",
 		title: "Зимняя распродажа",
 		desc: "Не упустите возможность! Скидка 30% на всю коллекцию одежды 'Gorgeous Creed'",
-		bg: "b1fcfd",
+		bg: "e6daa6",
 	},
 ];
 

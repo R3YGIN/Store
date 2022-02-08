@@ -30,6 +30,8 @@ const TopButton = styled.button`
 	padding: 10px;
 	font-weight: 600;
 	cursor: pointer;
+	border-radius: 2px;
+	border: 1px solid #000;
 	border: ${props => props.type === "filled" && "none"};
 	background-color: ${props => props.type === "filled" ? "black" : "transparent"};
 	color: ${props => props.type === "filled" && "white"};
@@ -162,6 +164,7 @@ const Button = styled.button`
 	color: white;
 	font-weight: 600;
 	border: none;
+	border-radius: 2px;
 `
 
 const Cart = () => {

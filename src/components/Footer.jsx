@@ -4,6 +4,7 @@ import { mobile } from "../responsive";
 
 const Container = styled.div`
 	display: flex;
+	background-color: #dedfe3;
 	${mobile({ flexDirection: "column" })}
 `
 
