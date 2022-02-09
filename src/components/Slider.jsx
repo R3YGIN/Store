@@ -30,6 +30,12 @@ const Arrow = styled.div`
 	cursor: pointer;
 	opacity: 0.5;
 	z-index: 2;
+	transition: all .25s;
+	&:hover{
+		background-color: #fff;
+		transform: scale(1.5);
+		opacity: 0.75;
+	}
 `
 
 const Wrapper = styled.div`
@@ -83,6 +89,7 @@ const Button = styled.button`
 	border: none;
 	border-radius: 2px;
 	color: #fff;
+	transition: all .25s;
 	&:hover{
 		color: #000;
 		background-color: #eee;

@@ -44,6 +44,7 @@ const SearchContainer = styled.div`
 const Input = styled.input`
 	border: none;
 	background-color: #000;
+	color: #fff;
 	${mobile({ width: "50px" })}
 `
 

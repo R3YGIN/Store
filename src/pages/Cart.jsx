@@ -71,6 +71,7 @@ const ProductDetails = styled.div`
 
 const Image = styled.img`
 	width: 200px;
+	border-radius: 20px;
 `
 
 const Details = styled.div`
