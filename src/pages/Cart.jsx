@@ -1,7 +1,4 @@
 import styled from "styled-components";
-import Navbar from "../components/Navbar";
-import Announcement from "../components/Announcement";
-import Footer from "../components/Footer";
 import { Add, CurrencyRuble, Remove } from "@mui/icons-material";
 import { mobile } from "../responsive";
 import { useSelector } from "react-redux";
@@ -67,7 +64,10 @@ const Info = styled.div`
 const Product = styled.div`
   display: flex;
   justify-content: space-between;
-  ${mobile({ flexDirection: "column" })}
+  margin: 0 20px 20px 0;
+  background-color: rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  ${mobile({ flexDirection: "column", backgroundColor: "transparent" })}
 `;
 
 const ProductDetails = styled.div`
@@ -204,8 +204,6 @@ const Cart = () => {
 
   return (
     <Container>
-      <Navbar />
-      <Announcement />
       <Wrapper>
         <Title>Корзина</Title>
         <Top>
@@ -294,7 +292,6 @@ const Cart = () => {
           </Summary>
         </Bottom>
       </Wrapper>
-      <Footer />
     </Container>
   );
 };

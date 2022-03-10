@@ -3,8 +3,9 @@ import { Badge } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { logoutFunc } from "../redux/apiCalls";
 
 const Container = styled.div`
   height: 60px;
@@ -78,7 +79,16 @@ const MenuItem = styled.div`
 `;
 
 const Navbar = () => {
+  const user = useSelector((state) => state.user.currentUser);
+
   const quantity = useSelector((state) => state.cart.quantity);
+
+  const dispatch = useDispatch();
+
+  const handleClick = async (e) => {
+    e.preventDefault();
+    await logoutFunc(dispatch);
+  };
 
   return (
     <Container>
@@ -87,15 +97,31 @@ const Navbar = () => {
           <Language>RU</Language>
           <SearchContainer>
             <Input placeholder="Поиск" />
-            <Search style={{ color: "gray", fontSize: 16 }} />
+            <Search
+              style={{
+                color: "gray",
+                fontSize: 16,
+                backgroundColor: "white",
+                borderRadius: "50%",
+                padding: "5px",
+              }}
+            />
           </SearchContainer>
         </Left>
         <Center>
-          <Logo>STORE</Logo>
+          <Link className="link" to="/">
+            <Logo>STORE</Logo>
+          </Link>
         </Center>
         <Right>
-          <MenuItem>REGISTER</MenuItem>
-          <MenuItem>SIGN IN</MenuItem>
+          {user ? (
+            <MenuItem onClick={handleClick}>Выйти</MenuItem>
+          ) : (
+            <Link className="link" style={{ display: "flex" }} to="/login">
+              <MenuItem>Регистрация</MenuItem>
+              <MenuItem>Войти</MenuItem>
+            </Link>
+          )}
           <Link to="/cart">
             <MenuItem>
               <Badge badgeContent={quantity} color="primary">
