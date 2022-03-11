@@ -1,11 +1,12 @@
 import styled from "styled-components";
 import { Add, CurrencyRuble, Remove } from "@mui/icons-material";
 import { mobile } from "../responsive";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import StripeCheckout from "react-stripe-checkout";
 import { useEffect, useState } from "react";
 import { userRequest } from "../requestMethods";
 import { useNavigate } from "react-router-dom";
+import { reset } from "../redux/cartRedux";
 
 const KEY = process.env.REACT_APP_STRIPE;
 
@@ -49,6 +50,15 @@ const TopText = styled.span`
   text-decoration: underline;
   cursor: pointer;
   margin: 0 10px;
+`;
+
+const ResetCart = styled.button`
+  font-size: 16px;
+  background-color: #fcc7cb;
+  color: #702342;
+  border: 1px solid #702342;
+  border-radius: 5px;
+  cursor: pointer;
 `;
 
 const Bottom = styled.div`
@@ -178,12 +188,15 @@ const Button = styled.button`
   font-weight: 600;
   border: none;
   border-radius: 2px;
+  cursor: pointer;
 `;
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const [stripeToken, setStripeToken] = useState(null);
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const onToken = (token) => {
     setStripeToken(token);
@@ -197,10 +210,17 @@ const Cart = () => {
           amount: 5000, //change to cart.total * 100
         });
         navigate("/success", { data: res.data }); //check
-      } catch {}
+      } catch (error) {
+        console.error("Ошибка", error);
+      }
     };
     stripeToken && makeRequest();
   }, [stripeToken, cart.total, navigate]);
+
+  const handleResetCart = (e) => {
+    e.preventDefault();
+    dispatch(reset());
+  };
 
   return (
     <Container>
@@ -211,12 +231,13 @@ const Cart = () => {
           <TopTexts>
             <TopText>Корзина (2)</TopText>
             <TopText>Список желаний (0)</TopText>
+            <ResetCart onClick={handleResetCart}>Очистить корзину</ResetCart>
           </TopTexts>
           <TopButton type="filled">Перейти к оформлению</TopButton>
         </Top>
         <Bottom>
           <Info>
-            {cart.products.map((product) => (
+            {cart.products?.map((product) => (
               <Product>
                 <ProductDetails>
                   <Image src={product.img} />

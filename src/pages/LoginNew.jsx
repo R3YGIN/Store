@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import styled from "styled-components";
-import { login } from "../redux/apiCalls";
+import { login, register } from "../redux/apiCalls";
 
 const Container = styled.div``;
 
@@ -11,7 +11,7 @@ const Wrapper = styled.div`
 
 const LoginBox = styled.div`
   flex: ${(props) => (props.selected ? 1.2 : 1)};
-  height: 100vh;
+  height: 90vh;
   display: flex;
   justify-content: center;
   transition: all 0.3s ease-out;
@@ -36,7 +36,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  height: ${(props) => (props.selected ? 0 : "auto")};
+  max-height: ${(props) => (props.selected ? 0 : "500px")};
   transition: all 0.3s ease-out;
 `;
 
@@ -83,6 +83,7 @@ const ToggleButton = styled.button`
   border-radius: 5px;
   min-width: 150px;
   display: ${(props) => (props.selected ? "none" : "block")};
+  transition: all 0.1s ease-out;
   &:hover {
     background-color: black;
     color: white;
@@ -96,7 +97,7 @@ const Error = styled.span`
 
 const RegisterBox = styled.div`
   flex: ${(props) => (props.selected ? 1.2 : 1)};
-  height: 100vh;
+  height: 90vh;
   background-color: #dbdbdb;
   display: flex;
   justify-content: center;
@@ -127,21 +128,44 @@ const AgreementLink = styled.a`
 `;
 
 const LoginNew = () => {
+  //CHANGE SECTION
+  const [isSelected, setSelected] = useState(false);
+
+  const handleToggle = (e) => {
+    e.preventDefault();
+    setSelected(!isSelected);
+  };
+
+  //ERROR
+  const { isFetching, error } = useSelector(
+    !isSelected ? (state) => state.user : (state) => state.account
+  );
+
+  console.log(error);
+
+  //LOGIN
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const dispatch = useDispatch();
-  const { isFetching, error } = useSelector((state) => state.user);
 
   const handleClick = (e) => {
     e.preventDefault();
     login(dispatch, { username, password });
   };
 
-  const [isSelected, setSelected] = useState(false);
+  //REGISTER
+  const [inputs, setInputs] = useState({});
 
-  const handleToggle = (e) => {
+  const handleChange = (e) => {
+    setInputs((prev) => {
+      return { ...prev, [e.target.name]: e.target.value };
+    });
+  };
+
+  const handleClickRegister = async (e) => {
     e.preventDefault();
-    setSelected(!isSelected);
+    const newUser = { ...inputs };
+    await register(dispatch, newUser);
   };
 
   return (
@@ -167,7 +191,7 @@ const LoginNew = () => {
               >
                 Войти
               </Button>
-              {error && <Error>Что-то пошло не так...</Error>}
+              {error && <Error>Ошибка авторизации</Error>}
             </Form>
             <ToggleButton selected={!isSelected} onClick={handleToggle}>
               Войти
@@ -181,21 +205,24 @@ const LoginNew = () => {
               <Input
                 placeholder="Имя пользователя"
                 type="text"
-                onChange={(e) => setUsername(e.target.value)}
+                name="username"
+                onChange={handleChange}
               />
               <Input
                 placeholder="Почта"
                 type="email"
-                onChange={(e) => setUsername(e.target.value)}
+                name="email"
+                onChange={handleChange}
               />
               <Input
                 placeholder="Пароль"
                 type="password"
-                onChange={(e) => setPassword(e.target.value)}
+                name="password"
+                onChange={handleChange}
               />
               <Button
                 selected={!isSelected}
-                onClick={handleClick}
+                onClick={handleClickRegister}
                 disabled={isFetching}
               >
                 Создать аккаунт
@@ -204,6 +231,7 @@ const LoginNew = () => {
                 Нажимая на кнопку Создать аккаунт, Вы соглашаетесь с{" "}
                 <AgreementLink>Условиями и Положениями</AgreementLink>
               </Agreement>
+              {error && <Error>Ошибка регистрации</Error>}
             </Form>
             <ToggleButton selected={isSelected} onClick={handleToggle}>
               Создать аккаунт
